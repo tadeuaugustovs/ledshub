@@ -45,6 +45,9 @@ import DarkIcon from '@material-ui/icons/Brightness4';
 // ✅ Importa a homepage customizada diretamente, sem plugin-home
 import { HomePage } from './components/home/HomePage';
 
+// ✅ Importa o githubAuthApiRef corretamente, como pede a documentação
+import { githubAuthApiRef } from '@backstage/core-plugin-api';
+
 const app = createApp({
   apis,
   bindRoutes({ bind }) {
@@ -65,14 +68,28 @@ const app = createApp({
     });
   },
   components: {
-    SignInPage: props => <SignInPage {...props} auto providers={['guest']} />,
+    SignInPage: props => (
+      <SignInPage
+        {...props}
+        auto
+        providers={[
+          'guest',
+          {
+            id: 'github-auth-provider',
+            title: 'GitHub',
+            message: 'Entre usando o GitHub',
+            apiRef: githubAuthApiRef,
+          },
+        ]}
+      />
+    ),
   },
   themes: [
     {
       id: 'ledshub',
       title: 'LEDS HUB',
       variant: 'dark',
-      icon: <DarkIcon />, 
+      icon: <DarkIcon />,
       Provider: ({ children }) => (
         <UnifiedThemeProvider theme={hubTheme}>
           <CssBaseline />
@@ -134,7 +151,9 @@ const routes = (
         </RequirePermission>
       }
     />
-    <Route path="/search" element={<SearchPage />}>{searchPage}</Route>
+    <Route path="/search" element={<SearchPage />}>
+      {searchPage}
+    </Route>
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/home" element={<HomePage />} />
