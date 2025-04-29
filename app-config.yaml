@@ -1,26 +1,40 @@
 app:
   title: LEDSHUB
   baseUrl: http://localhost:3000
+  support:
+    url: https://github.com/backstage/backstage/issues
+    items:
+      - title: Backstage Community
+        icon: chat
+        links:
+          - url: https://backstage.io/docs/overview/support
+            title: Support and community
+      - title: Backstage News
+        icon: docs
+        links:
+          - url: https://backstage.io/blog/
+            title: Backstage Blog
 
 organization:
   name: LEDS
 
 backend:
-  # Used for enabling authentication, secret is shared by all backend plugins
-  # See https://backstage.io/docs/auth/service-to-service-auth for
-  # information on the format
-  # auth:
-  #   keys:
-  #     - secret: ${BACKEND_SECRET}
   baseUrl: http://localhost:7007
   listen:
     port: 7007
-    # Uncomment the following host directive to bind to specific interfaces
-    # host: 127.0.0.1
   csp:
     connect-src: ["'self'", 'http:', 'https:']
-    # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
-    # Default Helmet Content-Security-Policy values can be removed by setting the key to false
+    img-src:
+      - "'self'"
+      - 'data:'
+      - 'https://backstage.io'
+      - 'https://img.shields.io/'
+      - 'https://api.dicebear.com/'
+      - 'https://kroki.io/'
+      - 'https://www.bestpractices.dev/'
+      - 'https://api.securityscorecards.dev'
+    frame-src:
+      - 'https://www.youtube.com'
   cors:
     origin: http://localhost:3000
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
@@ -28,8 +42,6 @@ backend:
   reading:
     allow:
       - host: raw.githubusercontent.com
-  # This is for local development only, it is not recommended to use this in production
-  # The production database configuration is stored in app-config.production.yaml
   database:
     client: pg
     connection:
@@ -40,7 +52,6 @@ backend:
       database: ${POSTGRES_DATABASE}
       ssl:
         rejectUnauthorized: false
-  # workingDirectory: /tmp # Use this to configure a working directory for the scaffolder, defaults to the OS temp-dir
 
 integrations:
   github:
@@ -54,19 +65,13 @@ integrations:
         $env: GHE_TOKEN
 
 proxy:
-  ### Example for how to add a proxy endpoint for the frontend.
-  ### A typical reason to do this is to handle HTTPS and CORS for internal services.
-  # endpoints:
-  #   '/test':
-  #     target: 'https://example.com'
-  #     changeOrigin: true
 
 techdocs:
-  builder: 'local'   # Alternatives - 'external'
+  builder: 'local'
   generator:
-    runIn: 'docker'  # Alternatives - 'local'
+    runIn: 'docker'
   publisher:
-    type: 'local'    # Alternatives - 'googleGcs' or 'awsS3'. Read documentation for using alternatives.
+    type: 'local'
 
 auth:
   environment: development
@@ -84,7 +89,6 @@ auth:
             - resolver: emailMatchingUserEntityAnnotation
 
 scaffolder:
-  # see https://backstage.io/docs/features/software-templates/configuration for software template options
 
 catalog:
   import:
@@ -106,7 +110,6 @@ catalog:
   useUrlReadersSearch: true
 
 kubernetes:
-  # see https://backstage.io/docs/features/kubernetes/configuration for kubernetes configuration options
 
 permission:
   enabled: true

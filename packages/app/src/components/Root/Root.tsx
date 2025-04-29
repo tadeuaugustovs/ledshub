@@ -1,7 +1,6 @@
 import { PropsWithChildren } from 'react';
 import { Home as HomeIcon } from '@material-ui/icons';
 import ExtensionIcon from '@material-ui/icons/Extension';
-import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
 import GroupIcon from '@material-ui/icons/People';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -83,7 +82,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
           icon={GroupIcon}
         />
         <SidebarItem icon={ExtensionIcon} to="/api-docs" text="APIs" />
-        <SidebarItem icon={LibraryBooks} to="/docs" text="Documentação" />
+        {/* Documentação removida */}
         <SidebarItem icon={CreateComponentIcon} to="/create" text="Criar" />
         {/* Fim do menu */}
         <SidebarDivider />
@@ -96,8 +95,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         icon={<UserSettingsSignInAvatar />}
         to="/settings"
       >
-       <SidebarItem icon={SettingsIcon} to="/settings" text="Configurações" />
-
+        <SidebarItem icon={SettingsIcon} to="/settings" text="Configurações" />
       </SidebarGroup>
     </Sidebar>
     {children}
