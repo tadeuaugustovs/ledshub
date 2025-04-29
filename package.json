@@ -55,6 +55,12 @@
   },
   "packageManager": "yarn@4.4.1",
   "dependencies": {
+    "@backstage/plugin-user-settings": "^0.8.21",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@material-ui/lab": "^4.0.0-alpha.61",
+    "@mui/icons-material": "^7.0.2",
+    "@mui/material": "^7.0.2",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   }

@@ -1,0 +1,22 @@
+.custom-signin-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #121212; /* fundo escuro */
+    color: white;
+  }
+  
+  .custom-logo {
+    width: 250px;
+    margin-bottom: 40px;
+  }
+  
+  .custom-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  

@@ -1,11 +1,13 @@
 import { PropsWithChildren } from 'react';
-import { makeStyles } from '@material-ui/core';
-import HomeIcon from '@material-ui/icons/Home';
+import { Home as HomeIcon } from '@material-ui/icons';
 import ExtensionIcon from '@material-ui/icons/Extension';
 import LibraryBooks from '@material-ui/icons/LibraryBooks';
 import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
-import LogoFull from './LogoFull';
-import LogoIcon from './LogoIcon';
+import GroupIcon from '@material-ui/icons/People';
+import MenuIcon from '@material-ui/icons/Menu';
+import SearchIcon from '@material-ui/icons/Search';
+import CategoryIcon from '@material-ui/icons/Category';
+import SettingsIcon from '@material-ui/icons/Settings';
 import {
   Settings as SidebarSettings,
   UserSettingsSignInAvatar,
@@ -13,7 +15,6 @@ import {
 import { SidebarSearchModal } from '@backstage/plugin-search';
 import {
   Sidebar,
-  sidebarConfig,
   SidebarDivider,
   SidebarGroup,
   SidebarItem,
@@ -23,12 +24,8 @@ import {
   useSidebarOpenState,
   Link,
 } from '@backstage/core-components';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
 import { MyGroupsSidebarItem } from '@backstage/plugin-org';
-import GroupIcon from '@material-ui/icons/People';
 
-// ✅ Logo LEDSHUB da versão anterior
 const SidebarLogo = () => {
   const { isOpen } = useSidebarOpenState();
   const logoSrc = isOpen ? '/logo.png' : '/logo.png';
@@ -72,35 +69,35 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
   <SidebarPage>
     <Sidebar>
       <SidebarLogo />
-      <SidebarGroup label="Search" icon={<SearchIcon />} to="/search">
+      <SidebarGroup label="Busca" icon={<SearchIcon />} to="/search">
         <SidebarSearchModal />
       </SidebarGroup>
       <SidebarDivider />
       <SidebarGroup label="Menu" icon={<MenuIcon />}>
-        {/* Global nav, not org-specific */}
-        <SidebarItem icon={HomeIcon} to="catalog" text="Home" />
+        {/* Menu principal */}
+        <SidebarItem icon={HomeIcon} to="/" text="Home" />
+        <SidebarItem icon={CategoryIcon} to="/catalog" text="Catálogo" />
         <MyGroupsSidebarItem
-          singularTitle="My Group"
-          pluralTitle="My Groups"
+          singularTitle="Minha equipe"
+          pluralTitle="Minha equipe"
           icon={GroupIcon}
         />
-        <SidebarItem icon={ExtensionIcon} to="api-docs" text="APIs" />
-        <SidebarItem icon={LibraryBooks} to="docs" text="Docs" />
-        <SidebarItem icon={CreateComponentIcon} to="create" text="Create..." />
-        {/* End global nav */}
+        <SidebarItem icon={ExtensionIcon} to="/api-docs" text="APIs" />
+        <SidebarItem icon={LibraryBooks} to="/docs" text="Documentação" />
+        <SidebarItem icon={CreateComponentIcon} to="/create" text="Criar" />
+        {/* Fim do menu */}
         <SidebarDivider />
-        <SidebarScrollWrapper>
-          {/* Items in this group will be scrollable if they run out of space */}
-        </SidebarScrollWrapper>
+        <SidebarScrollWrapper />
       </SidebarGroup>
       <SidebarSpace />
       <SidebarDivider />
       <SidebarGroup
-        label="Settings"
+        label="Configurações"
         icon={<UserSettingsSignInAvatar />}
         to="/settings"
       >
-        <SidebarSettings />
+       <SidebarItem icon={SettingsIcon} to="/settings" text="Configurações" />
+
       </SidebarGroup>
     </Sidebar>
     {children}

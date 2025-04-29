@@ -15,6 +15,7 @@ import {
 } from '@backstage/plugin-auth-node';
 import { stringifyEntityRef, DEFAULT_NAMESPACE } from '@backstage/catalog-model';
 
+// ✅ Configura apenas o GitHub manualmente
 const customAuthResolver = createBackendModule({
   pluginId: 'auth',
   moduleId: 'custom-auth-provider',
@@ -22,6 +23,7 @@ const customAuthResolver = createBackendModule({
     reg.registerInit({
       deps: { providers: authProvidersExtensionPoint },
       async init({ providers }) {
+        // 🔵 GitHub login
         providers.registerProvider({
           providerId: 'github',
           factory: createOAuthProviderFactory({
@@ -48,8 +50,8 @@ const customAuthResolver = createBackendModule({
                 }
 
                 const emails = await emailResponse.json();
-
                 const primaryEmail = emails.find((e: any) => e.primary && e.verified);
+
                 if (!primaryEmail) {
                   throw new Error('Login falhou: Nenhum email primário e verificado encontrado.');
                 }
@@ -58,16 +60,13 @@ const customAuthResolver = createBackendModule({
               }
 
               if (!email) {
-                throw new Error('Login falhou: o perfil do usuário não possui email mesmo buscando manualmente.');
+                throw new Error('Login falhou: o perfil do usuário não possui email.');
               }
 
               const [localPart] = email.split('@');
 
               try {
-                await ctx.findCatalogUser({
-                  entityRef: { name: localPart },
-                });
-
+                await ctx.findCatalogUser({ entityRef: { name: localPart } });
                 return ctx.signInWithCatalogUser({
                   entityRef: {
                     kind: 'User',
@@ -75,7 +74,6 @@ const customAuthResolver = createBackendModule({
                     name: localPart,
                   },
                 });
-
               } catch (error) {
                 console.warn(`Usuário '${localPart}' não encontrado no catalog. Permitindo login sem entidade.`);
 
@@ -102,19 +100,21 @@ const customAuthResolver = createBackendModule({
 
 const backend = createBackend();
 
+// Plugins padrão
 backend.add(import('@backstage/plugin-app-backend'));
 backend.add(import('@backstage/plugin-proxy-backend'));
 backend.add(import('@backstage/plugin-scaffolder-backend'));
 backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));
 backend.add(import('@backstage/plugin-techdocs-backend'));
 
+// 🔵 Apenas o auth backend principal
 backend.add(import('@backstage/plugin-auth-backend'));
 backend.add(import('@backstage/plugin-auth-backend-module-guest-provider'));
+backend.add(import('@backstage/plugin-auth-backend-module-google-provider'));
 
 backend.add(import('@backstage/plugin-catalog-backend'));
 backend.add(import('@backstage/plugin-catalog-backend-module-scaffolder-entity-model'));
 backend.add(import('@backstage/plugin-catalog-backend-module-logs'));
-backend.add(import('@backstage/plugin-catalog-backend-module-github'));
 
 backend.add(import('@backstage/plugin-permission-backend'));
 backend.add(import('@backstage/plugin-permission-backend-module-allow-all-policy'));
@@ -126,6 +126,7 @@ backend.add(import('@backstage/plugin-search-backend-module-techdocs'));
 
 backend.add(import('@backstage/plugin-kubernetes-backend'));
 
+// ✅ Adiciona o customAuthResolver personalizado
 backend.add(customAuthResolver);
 
 backend.start();

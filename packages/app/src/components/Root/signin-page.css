@@ -1,0 +1,10 @@
+/* Estiliza a tela de login */
+.SignInPage {
+    background-color: #000;
+    background-image: url("/logo.png");
+    background-repeat: no-repeat;
+    background-position: center 40px;
+    background-size: auto 100px;
+    min-height: 100vh;
+  }
+  

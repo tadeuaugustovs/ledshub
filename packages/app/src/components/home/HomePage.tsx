@@ -1,4 +1,3 @@
-import React from 'react';
 import { Page, Content } from '@backstage/core-components';
 import {
   HomePageCompanyLogo,
@@ -13,6 +12,7 @@ import {
   Typography,
   Paper,
 } from '@material-ui/core';
+import { useUserProfile } from '@backstage/plugin-user-settings'; // ✅ Correto!
 import { tools } from './shared';
 
 const useStyles = makeStyles(theme => ({
@@ -55,6 +55,7 @@ const useStyles = makeStyles(theme => ({
 
 export const HomePage = () => {
   const classes = useStyles();
+  const { profile } = useUserProfile(); // ✅ Correto para pegar o usuário!
 
   return (
     <SearchContextProvider>
@@ -64,9 +65,12 @@ export const HomePage = () => {
           {/* Usuário no topo direito */}
           <div className={classes.userInfo}>
             <Typography variant="body1" className={classes.userName}>
-              Tadeu Augusto
+              {profile?.displayName ?? 'Usuário'}
             </Typography>
-            <Avatar alt="Tadeu Augusto" src="/static/images/avatar/1.jpg" />
+            <Avatar
+              alt={profile?.displayName ?? 'Usuário'}
+              src={profile?.picture}
+            />
           </div>
 
           {/* Logo + Busca */}
@@ -99,7 +103,7 @@ export const HomePage = () => {
             </Grid>
           </Grid>
 
-          {/* Ferramentas com Toolkit (sem título e sem "Ferramentas" acima) */}
+          {/* Ferramentas com Toolkit */}
           <div className={classes.wrapper}>
             <Paper elevation={0} className={classes.block}>
               <HomePageToolkit tools={tools} title="" />

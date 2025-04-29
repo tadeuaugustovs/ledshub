@@ -1,9 +1,9 @@
 app:
-  title: Scaffolded Backstage App
+  title: LEDSHUB
   baseUrl: http://localhost:3000
 
 organization:
-  name: My Company
+  name: LEDS
 
 backend:
   # Used for enabling authentication, secret is shared by all backend plugins
@@ -25,6 +25,9 @@ backend:
     origin: http://localhost:3000
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
+  reading:
+    allow:
+      - host: raw.githubusercontent.com
   # This is for local development only, it is not recommended to use this in production
   # The production database configuration is stored in app-config.production.yaml
   database:
@@ -72,10 +75,13 @@ auth:
       development:
         clientId: ${AUTH_GITHUB_CLIENT_ID}
         clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
-
-
-
-
+    google:
+      development:
+        clientId: ${AUTH_GOOGLE_CLIENT_ID}
+        clientSecret: ${AUTH_GOOGLE_CLIENT_SECRET}
+        signIn:
+          resolvers:
+            - resolver: emailMatchingUserEntityAnnotation
 
 scaffolder:
   # see https://backstage.io/docs/features/software-templates/configuration for software template options
@@ -85,21 +91,18 @@ catalog:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow: [Component, System, API, Resource, Location, User, Group]
   locations:
     - type: file
       target: ../../examples/entities.yaml
-
     - type: file
       target: ../../examples/template/template.yaml
       rules:
         - allow: [Template]
-
     - type: file
       target: ../../examples/org.yaml
       rules:
         - allow: [User, Group]
-
   useUrlReadersSearch: true
 
 kubernetes:

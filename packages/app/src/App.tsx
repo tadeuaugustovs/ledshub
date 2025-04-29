@@ -1,4 +1,4 @@
-import { Navigate, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
 import {
   CatalogEntityPage,
@@ -36,17 +36,14 @@ import { CatalogGraphPage } from '@backstage/plugin-catalog-graph';
 import { RequirePermission } from '@backstage/plugin-permission-react';
 import { catalogEntityCreatePermission } from '@backstage/plugin-catalog-common/alpha';
 
-// ✅ Importa o tema LEDSHUB
 import { CssBaseline } from '@material-ui/core';
 import { UnifiedThemeProvider, themes } from '@backstage/theme';
 import { hubTheme } from './theme/ledshubTheme';
 import DarkIcon from '@material-ui/icons/Brightness4';
 
-// ✅ Importa a homepage customizada diretamente, sem plugin-home
 import { HomePage } from './components/home/HomePage';
-
-// ✅ Importa o githubAuthApiRef corretamente, como pede a documentação
-import { githubAuthApiRef } from '@backstage/core-plugin-api';
+import { githubAuthApiRef, googleAuthApiRef } from '@backstage/core-plugin-api';
+import { GithubIssuesPage } from '@backstage/plugin-github-issues';
 
 const app = createApp({
   apis,
@@ -73,12 +70,17 @@ const app = createApp({
         {...props}
         auto
         providers={[
-          'guest',
           {
-            id: 'github-auth-provider',
-            title: 'GitHub',
-            message: 'Entre usando o GitHub',
+            id: 'github',
+            title: 'Entrar com GitHub',
+            message: 'Use sua conta GitHub para entrar',
             apiRef: githubAuthApiRef,
+          },
+          {
+            id: 'google',
+            title: 'Entrar com Google',
+            message: 'Use sua conta Google para entrar',
+            apiRef: googleAuthApiRef,
           },
         ]}
       />
@@ -124,39 +126,31 @@ const app = createApp({
 
 const routes = (
   <FlatRoutes>
-    <Route path="/" element={<Navigate to="catalog" />} />
+    <Route path="/" element={<HomePage />} />
     <Route path="/catalog" element={<CatalogIndexPage />} />
-    <Route
-      path="/catalog/:namespace/:kind/:name"
-      element={<CatalogEntityPage />}
-    >
+    <Route path="/catalog/:namespace/:kind/:name" element={<CatalogEntityPage />}>
       {entityPage}
     </Route>
     <Route path="/docs" element={<TechDocsIndexPage />} />
-    <Route
-      path="/docs/:namespace/:kind/:name/*"
-      element={<TechDocsReaderPage />}
-    >
+    <Route path="/docs/:namespace/:kind/:name/*" element={<TechDocsReaderPage />}>
       <TechDocsAddons>
         <ReportIssue />
       </TechDocsAddons>
     </Route>
     <Route path="/create" element={<ScaffolderPage />} />
     <Route path="/api-docs" element={<ApiExplorerPage />} />
-    <Route
-      path="/catalog-import"
-      element={
-        <RequirePermission permission={catalogEntityCreatePermission}>
-          <CatalogImportPage />
-        </RequirePermission>
-      }
-    />
+    <Route path="/catalog-import" element={
+      <RequirePermission permission={catalogEntityCreatePermission}>
+        <CatalogImportPage />
+      </RequirePermission>
+    }/>
     <Route path="/search" element={<SearchPage />}>
       {searchPage}
     </Route>
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/home" element={<HomePage />} />
+    <Route path="/github-issues" element={<GithubIssuesPage />} />
   </FlatRoutes>
 );
 
