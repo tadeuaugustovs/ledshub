@@ -15,3 +15,8 @@
     "jsx": "react-jsx"
   }
 }
+{
+  "compilerOptions": {
+    "skipLibCheck": true
+  }
+}

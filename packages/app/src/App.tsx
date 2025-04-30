@@ -1,5 +1,6 @@
 import { Route } from 'react-router-dom';
 import { apiDocsPlugin, ApiExplorerPage } from '@backstage/plugin-api-docs';
+import FinanceiroPage from './components/financeiro/FinanceiroPage';
 import {
   CatalogEntityPage,
   CatalogIndexPage,
@@ -151,6 +152,7 @@ const routes = (
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/home" element={<HomePage />} />
     <Route path="/github-issues" element={<GithubIssuesPage />} />
+    <Route path="/financeiro" element={<FinanceiroPage />} />
   </FlatRoutes>
 );
 

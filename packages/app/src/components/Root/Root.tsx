@@ -7,6 +7,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import CategoryIcon from '@material-ui/icons/Category';
 import SettingsIcon from '@material-ui/icons/Settings';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import {
   Settings as SidebarSettings,
   UserSettingsSignInAvatar,
@@ -73,7 +74,6 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
       </SidebarGroup>
       <SidebarDivider />
       <SidebarGroup label="Menu" icon={<MenuIcon />}>
-        {/* Menu principal */}
         <SidebarItem icon={HomeIcon} to="/" text="Home" />
         <SidebarItem icon={CategoryIcon} to="/catalog" text="Catálogo" />
         <MyGroupsSidebarItem
@@ -82,9 +82,8 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
           icon={GroupIcon}
         />
         <SidebarItem icon={ExtensionIcon} to="/api-docs" text="APIs" />
-        {/* Documentação removida */}
+        <SidebarItem icon={AttachMoneyIcon} to="/financeiro" text="Financeiro" />
         <SidebarItem icon={CreateComponentIcon} to="/create" text="Criar" />
-        {/* Fim do menu */}
         <SidebarDivider />
         <SidebarScrollWrapper />
       </SidebarGroup>
