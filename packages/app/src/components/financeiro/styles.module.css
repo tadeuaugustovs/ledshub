@@ -112,18 +112,20 @@
   background-color: var(--color-error-dark);
 }
 
+/* CORREÇÃO DOS MODAIS - SUBSTITUIR A DEFINIÇÃO EXISTENTE */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
-  backdrop-filter: blur(4px);
+  animation: modalBackdropFadeIn 0.3s ease;
+  overflow: hidden;
 }
 
 .modalContent {
@@ -134,45 +136,111 @@
   max-width: 600px;
   max-height: 90vh;
   overflow-y: auto;
+  position: relative;
+  animation: modalContentFadeIn 0.3s ease;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   border: 1px solid var(--color-border);
 }
 
-.modalHeader {
+@keyframes modalBackdropFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalContentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalBackdropFadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalContentFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+.modalClosing {
+  animation: modalBackdropFadeOut 0.3s ease;
+}
+
+.modalClosing .modalContent {
+  animation: modalContentFadeOut 0.3s ease;
+}
+
+/* Estilos para o modal de projeto avançado */
+.modalLarge {
+  width: 80%;
+  max-width: 1200px;
+  height: 80vh;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
+  flex-direction: column;
+}
+
+.modalLarge .modalHeader {
+  margin-bottom: 16px;
+}
+
+.modalLarge .modalBody {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Estilos para abas dentro do modal */
+.modalTabs {
+  display: flex;
   border-bottom: 1px solid var(--color-border);
-  padding-bottom: 12px;
+  margin-bottom: 16px;
 }
 
-.modalTitle {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--color-primary-text);
-}
-
-.modalClose {
-  background: none;
-  border: none;
+.modalTab {
+  padding: 12px 16px;
   cursor: pointer;
-  font-size: 24px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease;
   color: var(--color-secondary-text);
-  transition: color 0.2s ease;
 }
 
-.modalClose:hover {
+.modalTabActive {
+  border-bottom-color: var(--color-primary);
   color: var(--color-primary-text);
+  font-weight: 500;
 }
 
-.modalFooter {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
-  border-top: 1px solid var(--color-border);
-  padding-top: 16px;
+.modalTab:hover:not(.modalTabActive) {
+  color: var(--color-primary-text);
+  background-color: var(--color-hover);
+}
+
+.modalTabContent {
+  display: none;
+}
+
+.modalTabContentActive {
+  display: block;
 }
 
 .table {
@@ -600,6 +668,145 @@
   opacity: 0.5;
 }
 
+/* Botões flutuantes */
+.floatingButtons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  z-index: 100;
+}
+
+.floatingButton {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.floatingButton:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.floatingButtonPrimary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.floatingButtonSecondary {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+/* Estilos para as seções de Contas a Pagar */
+.contasSection {
+  margin-bottom: 24px;
+}
+
+.contasHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.contasTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.contasFilters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.contasFilter {
+  padding: 6px 12px;
+  border-radius: 16px;
+  background-color: var(--color-surface-variant);
+  color: var(--color-secondary-text);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.contasFilterActive {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Cards coloridos por categoria */
+.contaCardInfra {
+  border-left-color: #3498db;
+}
+
+.contaCardSoftware {
+  border-left-color: #9b59b6;
+}
+
+.contaCardServicos {
+  border-left-color: #2ecc71;
+}
+
+.contaCardMaterial {
+  border-left-color: #f1c40f;
+}
+
+.contaCardOutros {
+  border-left-color: #e74c3c;
+}
+
+/* Progress bar */
+.progressBar {
+  height: 6px;
+  background-color: var(--color-border);
+  border-radius: 3px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.progressBarFill {
+  height: 100%;
+  background-color: var(--color-primary);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+/* Status indicator */
+.statusIndicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.statusIndicatorActive {
+  background-color: #2ecc71;
+}
+
+.statusIndicatorInactive {
+  background-color: #e74c3c;
+}
+
+.statusIndicatorPending {
+  background-color: #f39c12;
+}
+
 /* Responsividade */
 @media (max-width: 960px) {
   .resumoCards {
@@ -619,45 +826,6 @@
   .modalContent {
     width: 95%;
     padding: 16px;
-  }
-}
-
-/* CORREÇÃO DO MODAL - ADICIONE ISSO */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  overflow: auto;
-  padding: 20px;
-}
-
-.modalContent {
-  background-color: var(--color-surface-default);
-  border-radius: 8px;
-  padding: 24px;
-  width: 90%;
-  max-width: 600px;
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-  animation: modalFadeIn 0.3s ease-out;
-}
-
-@keyframes modalFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
   }
 }
 
