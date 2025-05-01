@@ -12,11 +12,7 @@
   "compilerOptions": {
     "outDir": "dist-types",
     "rootDir": ".",
-    "jsx": "react-jsx"
-  }
-}
-{
-  "compilerOptions": {
+    "jsx": "react-jsx",
     "skipLibCheck": true
   }
 }

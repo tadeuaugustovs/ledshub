@@ -29,7 +29,6 @@ import { Root } from './components/Root';
 import {
   AlertDisplay,
   OAuthRequestDialog,
-  SignInPage,
 } from '@backstage/core-components';
 import { createApp } from '@backstage/app-defaults';
 import { AppRouter, FlatRoutes } from '@backstage/core-app-api';
@@ -43,8 +42,10 @@ import { hubTheme } from './theme/ledshubTheme';
 import DarkIcon from '@material-ui/icons/Brightness4';
 
 import { HomePage } from './components/home/HomePage';
-import { githubAuthApiRef, googleAuthApiRef } from '@backstage/core-plugin-api';
 import { GithubIssuesPage } from '@backstage/plugin-github-issues';
+
+// 👉 AQUI: Importa a nova página de login customizada
+import { CustomSignInPage } from './components/login/CustomSignInPage.tsx';
 
 const app = createApp({
   apis,
@@ -66,26 +67,8 @@ const app = createApp({
     });
   },
   components: {
-    SignInPage: props => (
-      <SignInPage
-        {...props}
-        auto
-        providers={[
-          {
-            id: 'github',
-            title: 'Entrar com GitHub',
-            message: 'Use sua conta GitHub para entrar',
-            apiRef: githubAuthApiRef,
-          },
-          {
-            id: 'google',
-            title: 'Entrar com Google',
-            message: 'Use sua conta Google para entrar',
-            apiRef: googleAuthApiRef,
-          },
-        ]}
-      />
-    ),
+    // 👉 AQUI: Usa a CustomSignInPage
+    SignInPage: props => <CustomSignInPage {...props} />,
   },
   themes: [
     {
