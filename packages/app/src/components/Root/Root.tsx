@@ -8,6 +8,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import CategoryIcon from '@material-ui/icons/Category';
 import SettingsIcon from '@material-ui/icons/Settings';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import SecurityIcon from '@material-ui/icons/Security'; // 👈 Ícone para RBAC
+
 import {
   Settings as SidebarSettings,
   UserSettingsSignInAvatar,
@@ -84,6 +86,7 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
         <SidebarItem icon={ExtensionIcon} to="/api-docs" text="APIs" />
         <SidebarItem icon={AttachMoneyIcon} to="/financeiro" text="Financeiro" />
         <SidebarItem icon={CreateComponentIcon} to="/create" text="Criar" />
+        <SidebarItem icon={SecurityIcon} to="/rbac" text="Controle de Acesso" /> {/* RBAC */}
         <SidebarDivider />
         <SidebarScrollWrapper />
       </SidebarGroup>

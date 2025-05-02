@@ -341,8 +341,24 @@ export const TabelaBolsas: React.FC<TabelaBolsasProps> = ({
 
   // Função para salvar edição de bolsa
   const salvarEdicao = () => {
-    // Aqui seria implementada a lógica para salvar as alterações
-    console.log("Salvando bolsa editada:", editingBolsa)
+    // Aqui seria implementada a lógica para salvar as alterações no banco de dados
+    if (editingBolsa) {
+      // Simulação de chamada à API
+      console.log("Salvando bolsa editada:", editingBolsa)
+
+      // Na implementação real, aqui seria feita uma chamada para a API
+      // const response = await fetch(`/api/bolsas/${editingBolsa.id}`, {
+      //   method: 'PUT',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(editingBolsa)
+      // });
+
+      // if (response.ok) {
+      //   const updatedBolsa = await response.json();
+      //   // Atualizar o estado local com a bolsa atualizada
+      // }
+    }
+
     onCloseModal()
     setEditingBolsa(null)
   }
@@ -404,7 +420,7 @@ export const TabelaBolsas: React.FC<TabelaBolsasProps> = ({
     )
   }
 
-  // Fazer o mesmo para o método renderizarModalEdicao
+  // Renderizar modal de edição
   const renderizarModalEdicao = () => {
     if (!activeModal || activeModal.section !== "bolsa" || activeModal.type !== "edit" || !editingBolsa) return null
 

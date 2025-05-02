@@ -1,6 +1,4 @@
 "use client"
-
-import { useState } from "react"
 import { Grid } from "@material-ui/core"
 import { useFinanceiroData } from "./hooks/useFinanceiroData"
 import { TabelaBolsas } from "./components/TabelaBolsas"
@@ -9,17 +7,24 @@ import { PrestacaoContas } from "./components/PrestacaoContas"
 import { Projetos } from "./components/Projetos"
 import { ContasPagar } from "./components/ContasPagar"
 import { ComprasRequisicoes } from "./components/ComprasRequisicoes"
+import { GerenciamentoArmazenamento } from "./components/GerenciamentoArmazenamento"
 import styles from "./styles.module.css"
 
 export const FinanceiroPage = () => {
-  const { bolsas, bolsistas, prestacaoContas, projetos, contasPagar, comprasRequisicoes } =
-    useFinanceiroData()
-
-  const [activeModal, setActiveModal] = useState<{
-    type: "view" | "edit" | "add" | "delete"
-    section: "bolsa" | "bolsista" | "prestacao" | "projeto" | "conta" | "compra"
-    id: string | null
-  } | null>(null)
+  const {
+    bolsas,
+    bolsistas,
+    prestacaoContas,
+    projetos,
+    contasPagar,
+    comprasRequisicoes,
+    importInfo,
+    isLoading,
+    error,
+    refreshData,
+    activeModal,
+    setActiveModal,
+  } = useFinanceiroData()
 
   const handleOpenModal = (
     type: "view" | "edit" | "add" | "delete",
@@ -33,12 +38,101 @@ export const FinanceiroPage = () => {
     setActiveModal(null)
   }
 
+  if (isLoading) {
+    return (
+      <div className={styles.container}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#1e1e1e",
+              padding: "20px",
+              borderRadius: "8px",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+            }}
+          >
+            <h2>Carregando dados financeiros...</h2>
+            <div
+              style={{
+                width: "100%",
+                height: "6px",
+                backgroundColor: "#333333",
+                borderRadius: "3px",
+                overflow: "hidden",
+                marginTop: "16px",
+              }}
+            >
+              <div
+                style={{
+                  width: "30%",
+                  height: "100%",
+                  backgroundColor: "#3498db",
+                  borderRadius: "3px",
+                  animation: "loading 1.5s infinite",
+                }}
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100vh",
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: "#1e1e1e",
+              padding: "20px",
+              borderRadius: "8px",
+              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",
+              border: "1px solid #e74c3c",
+            }}
+          >
+            <h2 style={{ color: "#e74c3c" }}>Erro ao carregar dados</h2>
+            <p>{error.message}</p>
+            <button
+              className={styles.button}
+              style={{
+                backgroundColor: "#3498db",
+                color: "white",
+                border: "none",
+                padding: "8px 16px",
+                borderRadius: "4px",
+                marginTop: "16px",
+                cursor: "pointer",
+              }}
+              onClick={() => refreshData()}
+            >
+              Tentar novamente
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className={styles.container}>
       <h1 className={styles.pageTitle}>Sistema Financeiro</h1>
 
       <Grid container spacing={3}>
-        {/* Prestação de Contas - Agora no topo */}
+        {/* Prestação de Contas */}
         <Grid item xs={12}>
           <PrestacaoContas
             prestacoes={prestacaoContas}
@@ -73,6 +167,7 @@ export const FinanceiroPage = () => {
             onAdd={() => handleOpenModal("add", "bolsa")}
             activeModal={activeModal}
             onCloseModal={handleCloseModal}
+            importInfo={importInfo?.bolsas}
           />
         </Grid>
 
@@ -91,10 +186,7 @@ export const FinanceiroPage = () => {
         <Grid item xs={12}>
           <ComprasRequisicoes
             compras={comprasRequisicoes}
-            onView={(id) => handleOpenModal("view", "compra", id)}
             onEdit={(id) => handleOpenModal("edit", "compra", id)}
-            onDelete={(id) => handleOpenModal("delete", "compra", id)}
-            onAdd={() => handleOpenModal("add", "compra")}
             activeModal={activeModal}
             onCloseModal={handleCloseModal}
           />
@@ -110,6 +202,11 @@ export const FinanceiroPage = () => {
             activeModal={activeModal}
             onCloseModal={handleCloseModal}
           />
+        </Grid>
+
+        {/* Seção de Gerenciamento de Armazenamento - Movida para o final */}
+        <Grid item xs={12}>
+          <GerenciamentoArmazenamento importInfo={importInfo} onRefresh={refreshData} />
         </Grid>
       </Grid>
     </div>

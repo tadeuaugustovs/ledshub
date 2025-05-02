@@ -42,10 +42,13 @@ import { hubTheme } from './theme/ledshubTheme';
 import DarkIcon from '@material-ui/icons/Brightness4';
 
 import { HomePage } from './components/home/HomePage';
-import { GithubIssuesPage } from '@backstage/plugin-github-issues';
+import { GithubIssuesPage } from '@backstage-community/plugin-github-issues';
 
-// 👉 AQUI: Importa a nova página de login customizada
-import { CustomSignInPage } from './components/login/CustomSignInPage.tsx';
+// 👉 Importa a nova página de login customizada
+import { CustomSignInPage } from './components/login/CustomSignInPage';
+
+// 👉 IMPORTA a página do RBAC (import TEM que estar aqui no topo)
+import { RbacPage } from '@backstage-community/plugin-rbac';
 
 const app = createApp({
   apis,
@@ -67,7 +70,7 @@ const app = createApp({
     });
   },
   components: {
-    // 👉 AQUI: Usa a CustomSignInPage
+    // Usa a CustomSignInPage
     SignInPage: props => <CustomSignInPage {...props} />,
   },
   themes: [
@@ -136,6 +139,9 @@ const routes = (
     <Route path="/home" element={<HomePage />} />
     <Route path="/github-issues" element={<GithubIssuesPage />} />
     <Route path="/financeiro" element={<FinanceiroPage />} />
+
+    {/* 👉 Nova rota RBAC */}
+    <Route path="/rbac" element={<RbacPage />} />
   </FlatRoutes>
 );
 

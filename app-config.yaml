@@ -113,3 +113,59 @@ kubernetes:
 
 permission:
   enabled: true
+  rbac:
+    admin:
+      users:
+        - name: user:default/tadeuaugusto  # 👈 Você como admin
+    pluginsWithPermission:
+      - catalog
+      - scaffolder
+      - search
+      - techdocs
+      - permission
+      - rbac
+    database:
+      client: pg
+      connection:
+        host: ${POSTGRES_HOST}
+        port: ${POSTGRES_PORT}
+        user: ${POSTGRES_USER}
+        password: ${POSTGRES_PASSWORD}
+        database: ${POSTGRES_DATABASE}
+        ssl:
+          rejectUnauthorized: false
+    staticRoles:
+      - roleEntityRef: role:default/admin
+        description: Administrador geral com permissões completas
+        members:
+          - user:default/tadeuaugusto
+        policies:
+          - policy: allow-all
+
+      - roleEntityRef: role:default/editor
+        description: Editor com permissões para modificar conteúdo
+        members:
+          - group:default/ia
+        policies:
+          - policy: allow-catalog-entity-create
+          - policy: allow-catalog-entity-update
+          - policy: allow-catalog-entity-read
+
+      - roleEntityRef: role:default/viewer
+        description: Visualizador com acesso somente leitura
+        members:
+          - group:default/ia
+        policies:
+          - policy: allow-catalog-entity-read
+
+rbac:
+  database:
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+      database: ${POSTGRES_DATABASE}
+      ssl:
+        rejectUnauthorized: false
