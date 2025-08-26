@@ -50,8 +50,7 @@ backend:
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
       database: ${POSTGRES_DATABASE}
-      ssl:
-        rejectUnauthorized: false
+      ssl: true
 
 integrations:
   github:

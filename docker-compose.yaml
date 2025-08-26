@@ -1,0 +1,11 @@
+services:
+  backstage:
+    build: ./packages/backend/
+    container_name: backstage
+    ports:
+      - "3000:3000"
+      - "7007:7007"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
