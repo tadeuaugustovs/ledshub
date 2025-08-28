@@ -6,7 +6,7 @@
     "node": "20 || 22"
   },
   "scripts": {
-    "start": "backstage-cli repo start",
+    "start": "dotenv -e .env backstage-cli repo start",
     "start:backend:env": "dotenv -e .env yarn workspace backend start",
     "start:env": "bash -c 'set -a && source .env && set +a && yarn start'",
     "build:backend": "yarn workspace backend build",

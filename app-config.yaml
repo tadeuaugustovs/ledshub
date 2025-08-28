@@ -88,6 +88,7 @@ auth:
             - resolver: emailMatchingUserEntityAnnotation
 
 scaffolder:
+  default_allow_actions: ['*']
 
 catalog:
   import:
@@ -96,16 +97,10 @@ catalog:
   rules:
     - allow: [Component, System, API, Resource, Location, User, Group]
   locations:
-    - type: file
-      target: ../../examples/entities.yaml
-    - type: file
-      target: ../../examples/template/template.yaml
+    - type: url
+      target: https://raw.githubusercontent.com/LuizRojas/template-cicd/master/node-service-template/template.yaml
       rules:
         - allow: [Template]
-    - type: file
-      target: ../../examples/org.yaml
-      rules:
-        - allow: [User, Group]
   useUrlReadersSearch: true
 
 kubernetes:
@@ -115,7 +110,7 @@ permission:
   rbac:
     admin:
       users:
-        - name: user:default/tadeuaugusto  # 👈 Você como admin
+        - name: user:default/LuizRojas  # 👈 Você como admin
     pluginsWithPermission:
       - catalog
       - scaffolder
@@ -137,7 +132,7 @@ permission:
       - roleEntityRef: role:default/admin
         description: Administrador geral com permissões completas
         members:
-          - user:default/tadeuaugusto
+          - user:default/LuizRojas
         policies:
           - policy: allow-all
 

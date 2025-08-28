@@ -13,3 +13,7 @@ yarn start
 # ledshub_test
 Versão funcional mais recente
 >>>>>>> 276bbfbcea438f68e831ffe84bae2a236d845222
+
+=======
+# Exportar variáveis de ambiente
+export $(grep -v '^#' .env | xargs -0)

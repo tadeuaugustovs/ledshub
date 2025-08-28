@@ -11,3 +11,5 @@ spec:
   type: website
   owner: user:default/john@example.com
   lifecycle: experimental
+annotations:
+  github.com/project-slug: LuizRojas/${{ parameters.repoName }}

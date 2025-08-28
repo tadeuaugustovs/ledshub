@@ -51,6 +51,7 @@
     "@spotify/backstage-plugin-permission-backend-module-rbac": "^0.4.4",
     "app": "link:../app",
     "better-sqlite3": "^9.0.0",
+    "dotenv": "^17.2.1",
     "node-gyp": "^10.0.0",
     "pg": "^8.15.6"
   },
