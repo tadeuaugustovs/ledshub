@@ -52,11 +52,10 @@
     "better-sqlite3": "^9.0.0",
     "dotenv": "^17.2.1",
     "node-gyp": "^10.0.0",
-    "pg": "^8.15.6"
+    "pg": "^8.11.3"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.32.0",
-    "@types/pg": "^8.11.14"
+    "@backstage/cli": "^0.32.0"
   },
   "files": [
     "dist"

@@ -6,7 +6,7 @@
     "node": "20 || 22"
   },
   "scripts": {
-    "start": "dotenv -e .env backstage-cli repo start",
+    "start": "backstage-cli repo start",
     "start:backend:env": "dotenv -e .env yarn workspace backend start",
     "start:env": "bash -c 'set -a && source .env && set +a && yarn start'",
     "build:backend": "yarn workspace backend build",
@@ -37,7 +37,6 @@
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "autoprefixer": "^10.4.21",
-    "dotenv-cli": "^8.0.0",
     "node-gyp": "^10.0.0",
     "postcss": "^8.5.3",
     "prettier": "^2.3.2",
