@@ -68,6 +68,8 @@
     "@backstage-community/plugin-badges": "^0.8.0",
     "@backstage-community/plugin-github-actions": "^0.10.0",
     "@backstage-community/plugin-todo": "^0.7.0",
+    "@backstage/app-defaults": "^1.6.5",
+    "@backstage/core-app-api": "^1.18.0",
     "@backstage/plugin-kubernetes": "^0.12.6",
     "@backstage/plugin-techdocs": "^1.12.5",
     "@backstage/plugin-techdocs-react": "^1.2.16",

@@ -42,13 +42,15 @@ import { hubTheme } from './theme/ledshubTheme';
 import DarkIcon from '@material-ui/icons/Brightness4';
 
 import { HomePage } from './components/home/HomePage';
-import { GithubIssuesPage } from '@backstage-community/plugin-github-issues';
+// import { GithubIssuesPage } from '@backstage-community/plugin-github-issues';
 
 // 👉 Importa a nova página de login customizada
 import { CustomSignInPage } from './components/login/CustomSignInPage';
 
 // 👉 IMPORTA a página do RBAC (import TEM que estar aqui no topo)
 import { RbacPage } from '@backstage-community/plugin-rbac';
+
+import { githubActionsPlugin } from '@backstage-community/plugin-github-actions';
 
 const app = createApp({
   apis,
@@ -69,6 +71,11 @@ const app = createApp({
       catalogIndex: catalogPlugin.routes.catalogIndex,
     });
   },
+  
+  features: [
+    githubActionsPlugin,
+  ],
+
   components: {
     // Usa a CustomSignInPage
     SignInPage: props => <CustomSignInPage {...props} />,
@@ -137,7 +144,7 @@ const routes = (
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/home" element={<HomePage />} />
-    <Route path="/github-issues" element={<GithubIssuesPage />} />
+    {/* <Route path="/github-issues" element={<GithubIssuesPage />} /> */}
 
     {/* 👉 Nova rota RBAC */}
     <Route path="/rbac" element={<RbacPage />} />

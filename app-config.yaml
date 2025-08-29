@@ -87,9 +87,6 @@ auth:
           resolvers:
             - resolver: emailMatchingUserEntityAnnotation
 
-scaffolder:
-  default_allow_actions: ['*']
-
 catalog:
   import:
     entityFilename: catalog-info.yaml
@@ -113,7 +110,6 @@ permission:
         - name: user:default/LuizRojas  # 👈 Você como admin
     pluginsWithPermission:
       - catalog
-      - scaffolder
       - search
       - techdocs
       - permission

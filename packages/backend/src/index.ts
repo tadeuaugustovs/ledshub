@@ -111,6 +111,7 @@ backend.add(import('@backstage/plugin-techdocs-backend'));
 backend.add(import('@backstage/plugin-auth-backend'));
 backend.add(import('@backstage/plugin-auth-backend-module-guest-provider'));
 backend.add(import('@backstage/plugin-auth-backend-module-google-provider'));
+backend.add(import('@backstage/plugin-auth-backend-module-github-provider'));
 
 backend.add(import('@backstage/plugin-catalog-backend'));
 backend.add(import('@backstage/plugin-catalog-backend-module-scaffolder-entity-model'));
@@ -125,6 +126,7 @@ backend.add(import('@backstage/plugin-kubernetes-backend'));
 
 // ✅ Adiciona o customAuthResolver personalizado
 backend.add(customAuthResolver);
+
 
 // RBAC backend
 backend.add(import('@backstage-community/plugin-rbac-backend'));
