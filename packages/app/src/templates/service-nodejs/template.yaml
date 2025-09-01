@@ -1,0 +1,15 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: service-nodejs
+  title: Service Node.js
+  description: Cria um serviço Node.js
+spec:
+  owner: team@example.com
+  type: service
+  steps:
+    - id: fetch
+      name: Fetch Base Template
+      action: fetch:template
+      input:
+        url: ./skeleton

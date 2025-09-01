@@ -89,6 +89,8 @@ auth:
             - resolver: emailMatchingUserEntityAnnotation
 
 scaffolder:
+  templates:
+    - ./packages/app/src/templates
 
 catalog:
   import:
@@ -97,16 +99,8 @@ catalog:
   rules:
     - allow: [Component, System, API, Resource, Location, User, Group]
   locations:
-    - type: file
-      target: ../../examples/entities.yaml
-    - type: file
-      target: ../../examples/template/template.yaml
-      rules:
-        - allow: [Template]
-    - type: file
-      target: ../../examples/org.yaml
-      rules:
-        - allow: [User, Group]
+    - type: url
+      target: ./app/src/templates/service-nodejs/skeleton/catalog-info.yaml
   useUrlReadersSearch: true
 
 kubernetes:

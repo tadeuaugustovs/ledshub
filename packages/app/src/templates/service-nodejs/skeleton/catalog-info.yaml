@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: financeiro
+  description: Sistema financeiro
+  owner: team@example.com
+spec:
+  type: service
