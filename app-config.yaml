@@ -104,9 +104,13 @@ catalog:
       rules:
         - allow: [Template]
     - type: file
-      target: ./packages/app/src/templates/service-nodejs/template.yaml
+      target: ./service-nodejs/template.yaml
       rules:
         - allow: [Template]
+    - type: file
+      target: ../../examples/org.yaml
+      rules:
+        - allow: [User, group]
   useUrlReadersSearch: true
 
 kubernetes:

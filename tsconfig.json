@@ -7,7 +7,7 @@
     "plugins/*/config.d.ts",
     "plugins/*/dev",
     "plugins/*/migrations"
-  ],
+, "packages/backend/service-nodejs"  ],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "outDir": "dist-types",
