@@ -98,12 +98,12 @@ catalog:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   locations:
-    - type: url
-      target: https://raw.githubusercontent.com/backstage/backstage/master/plugins/scaffolder-backend/sample-templates/bitbucket-demo/template.yaml
-      rules:
-        - allow: [Template]
+    # - type: url
+    #   target: https://raw.githubusercontent.com/backstage/backstage/master/plugins/scaffolder-backend/sample-templates/bitbucket-demo/template.yaml
+    #   rules:
+    #     - allow: [Template]
     - type: file
-      target: examples/template/template.yaml
+      target: ../../examples/template/template.yaml
       rules:
         - allow: [Template]
     - type: file

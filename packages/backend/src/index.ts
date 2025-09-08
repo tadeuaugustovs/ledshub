@@ -15,6 +15,30 @@ import {
 } from '@backstage/plugin-auth-node';
 import { stringifyEntityRef, DEFAULT_NAMESPACE } from '@backstage/catalog-model';
 
+import {
+  coreServices,
+  createBackendPlugin,
+} from '@backstage/backend-plugin-api';
+
+createBackendPlugin({
+  pluginId: 'example',
+  register(env) {
+    env.registerInit({
+      deps: {
+        cache: coreServices.cache,
+      },
+      async init({ cache }) {
+        const { key, value } = { key: 'test:key', value: 'bob' };
+        await cache.set(key, value, { ttl: 1000 });
+
+        // .. some other stuff.
+
+        await cache.get(key); // 'bob'
+      },
+    });
+  },
+});
+
 // ✅ Configura apenas o GitHub manualmente
 const customAuthResolver = createBackendModule({
   pluginId: 'auth',
