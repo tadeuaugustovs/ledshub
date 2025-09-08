@@ -127,6 +127,6 @@ backend.add(import('@backstage/plugin-kubernetes-backend'));
 backend.add(customAuthResolver);
 
 // RBAC backend
-backend.add(import('@backstage-community/plugin-rbac-backend'));
+// backend.add(import('@backstage-community/plugin-rbac-backend'));
 
 backend.start();

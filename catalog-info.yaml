@@ -1,13 +1,11 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ledshub
-  description: An example of a Backstage application.
+  name: ${{ values.name }}
+  description: An example component created from a template.
   annotations:
-    github.com/project-slug: tadeuaugustovs/ledshub
-    backstage.io/techdocs-ref: dir:.
-    backstage.io/kubernetes-id: ledshub
+    github.com/project-slug: LuizRojas/${{ values.name }}
 spec:
-  type: website
-  owner: user:default/john@example.com
+  type: service
+  owner: ${{ values.owner }}
   lifecycle: experimental

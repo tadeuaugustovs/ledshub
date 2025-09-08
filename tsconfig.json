@@ -13,6 +13,7 @@
     "outDir": "dist-types",
     "rootDir": ".",
     "jsx": "react-jsx",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "ignoreDeprecations": "6.0"
   }
 }
