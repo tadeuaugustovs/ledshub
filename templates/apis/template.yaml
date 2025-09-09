@@ -1,0 +1,53 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: create-simple-api
+  title: Create Simple API
+  description: Creates a basic API service with an Express.js backend.
+spec:
+  owner: backstage/techdocs-core
+  type: service
+  parameters:
+    - title: API Details
+      required:
+        - name
+        - owner
+      properties:
+        name:
+          title: API Name
+          type: string
+          description: Unique name for the new API.
+          ui:autofocus: true
+        owner:
+          title: Owner
+          type: string
+          description: Owner of the API.
+          ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              kind: Group
+  steps:
+    - id: fetchBase
+      name: Fetch Base Template
+      action: fetch:template
+      input:
+        url: ./skeleton # Points to a local skeleton directory
+        copyWithoutRender:
+          - .github/workflows/*
+    - id: publishToGitHub
+      name: Publish to GitHub
+      action: publish:github
+      input:
+        repoUrl: github.com?owner={{ parameters.owner }}&repo={{ parameters.name }}
+    - id: registerInCatalog
+      name: Register in Catalog
+      action: catalog:register
+      input:
+        entityRef: "url:{{ output.repoUrl }}/catalog-info.yaml"
+  output:
+    links:
+      - title: Repository
+        url: "{{ output.repoUrl }}"
+      - title: Open in Catalog
+        icon: catalog
+        entityRef: "url:{{ output.repoUrl }}/catalog-info.yaml"

@@ -89,32 +89,28 @@ auth:
             - resolver: emailMatchingUserEntityAnnotation
 
 scaffolder:
-  templates:
-    - ./templates/exemplo-documentacao/template.yaml
-    - ./examples/template/template.yaml
 
 catalog:
-  import:
-    entityFilename: catalog-info.yaml
-    pullRequestBranchName: backstage-integration
+  # import:
+  #   entityFilename: catalog-info.yaml
+  #   pullRequestBranchName: backstage-integration
+  # rules:
+  #   - allow: [Component, System, API, Resource, Template, Group, User]
+  rules:
+    - allow: [Component, System, API, Resource, Template, Group, User, Location]
   locations:
     # - type: url
-    #   target: https://raw.githubusercontent.com/backstage/backstage/master/plugins/scaffolder-backend/sample-templates/bitbucket-demo/template.yaml
+    #   target: https://raw.githubusercontent.com/LuizRojas/templates-backstage/tree/main/catalog-info.yaml
     #   rules:
-    #     - allow: [Template]
+    #     - allow: [Component, System, API, Resource, Template, Group, User, Location]
+    - type: url
+      target: https://raw.githubusercontent.com/LuizRojas/templates-backstage/main/templates/java-service.yaml
+      rules:
+        - allow: [Component, System, API, Resource, Template, Group, User, Location]
     - type: file
-      target: ../../examples/template/template.yaml
+      target: ../../templates/exemplo-documentacao/template.yaml
       rules:
         - allow: [Template]
-    - type: file
-      target: ../../templates/template.yaml
-      rules:
-        - allow: [Template]
-    - type: file
-      target: ../../examples/org.yaml
-      rules:
-        - allow: [User, group]
-
   useUrlReadersSearch: true
 
 # kubernetes:
