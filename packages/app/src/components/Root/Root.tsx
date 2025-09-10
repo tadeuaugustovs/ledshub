@@ -1,17 +1,17 @@
 import { PropsWithChildren } from 'react';
 import { Home as HomeIcon } from '@material-ui/icons';
 import ExtensionIcon from '@material-ui/icons/Extension';
-import CreateComponentIcon from '@material-ui/icons/AddCircleOutline';
 import GroupIcon from '@material-ui/icons/People';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import CategoryIcon from '@material-ui/icons/Category';
 import SettingsIcon from '@material-ui/icons/Settings';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import SecurityIcon from '@material-ui/icons/Security'; // 👈 Ícone para RBAC
+import FeedIcon from '@mui/icons-material/Feed';
+import DeveloperBoardIcon from '@mui/icons-material/DeveloperBoard';
+import LanguageIcon from '@mui/icons-material/Language';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import ApiIcon from '@mui/icons-material/Api';
 
 import {
-  Settings as SidebarSettings,
   UserSettingsSignInAvatar,
 } from '@backstage/plugin-user-settings';
 import { SidebarSearchModal } from '@backstage/plugin-search';
@@ -27,6 +27,7 @@ import {
   Link,
 } from '@backstage/core-components';
 import { MyGroupsSidebarItem } from '@backstage/plugin-org';
+import { DeveloperBoard } from '@mui/icons-material';
 
 const SidebarLogo = () => {
   const { isOpen } = useSidebarOpenState();
@@ -76,17 +77,18 @@ export const Root = ({ children }: PropsWithChildren<{}>) => (
       </SidebarGroup>
       <SidebarDivider />
       <SidebarGroup label="Menu" icon={<MenuIcon />}>
-        <SidebarItem icon={HomeIcon} to="/" text="Home" />
-        <SidebarItem icon={CategoryIcon} to="/catalog" text="Catálogo" />
+        <SidebarItem icon={HomeIcon} to="/" text="Início" />
+        <SidebarItem icon={DeveloperBoardIcon} to="/catalog" text="Tudo" />
         <MyGroupsSidebarItem
           singularTitle="Minha equipe"
           pluralTitle="Minha equipe"
           icon={GroupIcon}
         />
         <SidebarItem icon={ExtensionIcon} to="/api-docs" text="APIs" />
-        <SidebarItem icon={AttachMoneyIcon} to="/financeiro" text="Financeiro" />
-        <SidebarItem icon={CreateComponentIcon} to="/create" text="Criar" />
-        <SidebarItem icon={SecurityIcon} to="/rbac" text="Controle de Acesso" /> {/* RBAC */}
+        <SidebarItem icon={LanguageIcon} to='/websites' text="WebSites" />
+        <SidebarItem icon={AccountTreeIcon} to='/workflows' text="Workflows" />
+        <SidebarItem icon={ApiIcon} to='/endpoints' text="Endpoints" />
+        <SidebarItem icon={FeedIcon} to="/create" text="Templates" />
         <SidebarDivider />
         <SidebarScrollWrapper />
       </SidebarGroup>

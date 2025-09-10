@@ -77,3 +77,14 @@ export const calendarEvents = [
     time: "11:00 - 12:00",
   },
 ]
+
+export const homeConfig = {
+  produtosInternos: {
+    tools: [
+      { name: 'Backstage', url: 'https://backstage.io/docs/overview/what-is-backstage/' },
+      { name: 'LEDS Core', url: 'https://core.conectafapes.leds.dev.br/' },
+    ],
+    issues: 'https://github.com/leds-conectafapes/produtos-internos-project/issues',
+  },
+};
+

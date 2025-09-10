@@ -41,10 +41,10 @@ import { hubTheme } from './theme/ledshubTheme';
 import DarkIcon from '@material-ui/icons/Brightness4';
 
 import { HomePage } from './components/home/HomePage';
-import { GithubIssuesPage } from '@backstage-community/plugin-github-issues';
 
 // 👉 Importa a nova página de login customizada
 import { CustomSignInPage } from './components/login/CustomSignInPage';
+
 
 const app = createApp({
   apis,
@@ -133,7 +133,7 @@ const routes = (
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/home" element={<HomePage />} />
-    <Route path="/github-issues" element={<GithubIssuesPage />} />
+    {/* <Route path="/github-issues" element={<GithubIssuesPage />} /> */}
     {/* <Route path="/financeiro" element={<FinanceiroPage />} /> */}
   </FlatRoutes>
 );

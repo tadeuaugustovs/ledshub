@@ -1,79 +1,110 @@
-import { Page, Content } from '@backstage/core-components';
-import {
-  HomePageCompanyLogo,
-  TemplateBackstageLogo,
-  HomePageStarredEntities,
-  HomePageToolkit,
-  CustomHomepageGrid,
-  HomePageRandomJoke,
-  HomePageTopVisited,
-  HomePageRecentlyVisited,
-} from '@backstage/plugin-home';
-import { HomePageSearchBar } from '@backstage/plugin-search';
-import { Grid } from '@material-ui/core';
+import React from 'react';
+import { Grid, Card, CardHeader, CardContent, Button, Typography, List, ListItem, ListItemText } from '@mui/material';
+import { tools, notices, calendarEvents, homeConfig } from './home-data';
 
-import { tools, useLogoStyles } from './shared';
-
-const defaultConfig = [
-  {
-    component: 'HomePageSearchBar',
-    x: 0,
-    y: 0,
-    width: 24,
-    height: 2,
-  },
-  {
-    component: 'HomePageRecentlyVisited',
-    x: 0,
-    y: 1,
-    width: 5,
-    height: 4,
-  },
-  {
-    component: 'HomePageTopVisited',
-    x: 5,
-    y: 1,
-    width: 5,
-    height: 4,
-  },
-  {
-    component: 'HomePageStarredEntities',
-    x: 0,
-    y: 2,
-    width: 6,
-    height: 4,
-  },
-  {
-    component: 'HomePageToolkit',
-    x: 6,
-    y: 6,
-    width: 4,
-    height: 4,
-  },
-];
-
-export const CustomizableHomePage = () => {
-  const { svg, path, container } = useLogoStyles();
+const CustomizableHomePage = () => {
+  // 🔹 No futuro: pegar do catálogo ou do GitHub
+  const userTeam = 'produtosInternos';
+  const teamConfig = homeConfig[userTeam];
 
   return (
-    <Page themeId="home">
-      <Content>
-        <Grid container justifyContent="center">
-          <HomePageCompanyLogo
-            className={container}
-            logo={<TemplateBackstageLogo classes={{ svg, path }} />}
-          />
-        </Grid>
+    <Grid container spacing={3}>
+      {/* Boas-vindas */}
+      <Grid item xs={12}>
+        <Typography variant="h4">Bem-vindo ao LEDS HUB 👋</Typography>
+        <Typography variant="subtitle1">Time: {userTeam}</Typography>
+      </Grid>
 
-        <CustomHomepageGrid config={defaultConfig}>
-          <HomePageSearchBar />
-          <HomePageRecentlyVisited />
-          <HomePageTopVisited />
-          <HomePageToolkit tools={tools} />
-          <HomePageStarredEntities />
-          <HomePageRandomJoke />
-        </CustomHomepageGrid>
-      </Content>
-    </Page>
+      {/* Ferramentas globais */}
+      <Grid item xs={12} md={6}>
+        <Card>
+          <CardHeader title="Ferramentas Globais" />
+          <CardContent>
+            {tools.map(tool => (
+              <Button
+                key={tool.title}
+                href={tool.link}
+                target="_blank"
+                startIcon={<span className="material-icons">{tool.icon}</span>}
+                style={{ margin: '4px' }}
+              >
+                {tool.title}
+              </Button>
+            ))}
+          </CardContent>
+        </Card>
+      </Grid>
+
+      {/* Avisos */}
+      <Grid item xs={12} md={6}>
+        <Card>
+          <CardHeader title="Avisos" />
+          <CardContent>
+            <List>
+              {notices.map((notice, index) => (
+                <ListItem key={index}>
+                  <ListItemText
+                    primary={`${notice.title} (${notice.priority})`}
+                    secondary={`${notice.content} - ${notice.date}`}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
+      </Grid>
+
+      {/* Eventos de calendário */}
+      <Grid item xs={12} md={6}>
+        <Card>
+          <CardHeader title="Próximos Eventos" />
+          <CardContent>
+            <List>
+              {calendarEvents.map((event, index) => (
+                <ListItem key={index}>
+                  <ListItemText
+                    primary={event.title}
+                    secondary={`${event.date} - ${event.time}`}
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </CardContent>
+        </Card>
+      </Grid>
+
+      {/* Ferramentas específicas do time */}
+      <Grid item xs={12} md={6}>
+        <Card>
+          <CardHeader title="Ferramentas do Time" />
+          <CardContent>
+            {teamConfig.tools.map(tool => (
+              <Button
+                key={tool.name}
+                href={tool.url}
+                target="_blank"
+                style={{ margin: '4px' }}
+              >
+                {tool.name}
+              </Button>
+            ))}
+          </CardContent>
+        </Card>
+      </Grid>
+
+      {/* Issues do time */}
+      <Grid item xs={12}>
+        <Card>
+          <CardHeader title="Quadro de Issues" />
+          <CardContent>
+            <Button href={teamConfig.issues} target="_blank" variant="contained">
+              Abrir Issues do Time
+            </Button>
+          </CardContent>
+        </Card>
+      </Grid>
+    </Grid>
   );
 };
+
+export default CustomizableHomePage;
