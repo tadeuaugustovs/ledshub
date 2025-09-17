@@ -1,24 +1,36 @@
 name: Build and Publish Dev Image to GHCR
 
-# Gatilho: Este workflow roda toda vez que houver um push na branch 'dev'
 on:
   push:
     branches: [ "dev" ]
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest # O trabalho será executado em uma máquina virtual Linux
+    runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write # Permissão para o workflow escrever no GHCR do repositório
+      packages: write
 
     steps:
-      # Passo 1: Clona seu repositório para dentro do ambiente da Action
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Passo 2: Faz o login no GitHub Container Registry
-      # Ele usa um token especial e seguro (GITHUB_TOKEN) que o GitHub Actions fornece automaticamente
+      # NOVO PASSO: Configurar o ambiente Node.js e Yarn
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use a mesma versão Node que você usa localmente
+          cache: 'yarn'
+
+      # NOVO PASSO: Instalar as dependências do projeto
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # NOVO PASSO: Compilar os artefatos do backend
+      - name: Build backend artifacts
+        run: yarn workspace backend build
+
+      # Passo de Login (continua igual)
       - name: Log in to the Container Registry
         uses: docker/login-action@v3
         with:
@@ -26,24 +38,19 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      # Passo 3: Extrai metadados (como tags) para a imagem Docker
-      # Isso vai gerar tags automaticamente baseadas na branch e no commit
+      # Passo de Metadados (continua igual)
       - name: Extract metadata for Docker
         id: meta
         uses: docker/metadata-action@v5
         with:
           images: ghcr.io/${{ github.repository }}/backstage
 
-      # Passo 4: Constrói e envia a imagem Docker
-      # Esta ação única faz o build (usando seu Dockerfile) e o push para o GHCR
+      # Passo de Build e Push (continua igual, mas agora funcionará)
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./packages/backend/Dockerfile # O caminho para seu Dockerfile
+          file: ./packages/backend/Dockerfile
           push: true
-          # Usa as tags geradas no passo anterior. Para a branch dev, irá gerar tags como:
-          # ghcr.io/LuizRojas/ledshub/backstage:dev
-          # ghcr.io/LuizRojas/ledshub/backstage:sha-xxxxxxxx
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
