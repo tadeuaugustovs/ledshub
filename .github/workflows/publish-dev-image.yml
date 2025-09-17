@@ -1,0 +1,49 @@
+name: Build and Publish Dev Image to GHCR
+
+# Gatilho: Este workflow roda toda vez que houver um push na branch 'dev'
+on:
+  push:
+    branches: [ "dev" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest # O trabalho será executado em uma máquina virtual Linux
+    permissions:
+      contents: read
+      packages: write # Permissão para o workflow escrever no GHCR do repositório
+
+    steps:
+      # Passo 1: Clona seu repositório para dentro do ambiente da Action
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Passo 2: Faz o login no GitHub Container Registry
+      # Ele usa um token especial e seguro (GITHUB_TOKEN) que o GitHub Actions fornece automaticamente
+      - name: Log in to the Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # Passo 3: Extrai metadados (como tags) para a imagem Docker
+      # Isso vai gerar tags automaticamente baseadas na branch e no commit
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}/backstage
+
+      # Passo 4: Constrói e envia a imagem Docker
+      # Esta ação única faz o build (usando seu Dockerfile) e o push para o GHCR
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./packages/backend/Dockerfile # O caminho para seu Dockerfile
+          push: true
+          # Usa as tags geradas no passo anterior. Para a branch dev, irá gerar tags como:
+          # ghcr.io/LuizRojas/ledshub/backstage:dev
+          # ghcr.io/LuizRojas/ledshub/backstage:sha-xxxxxxxx
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
