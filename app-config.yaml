@@ -114,10 +114,18 @@ scaffolder:
 # =====
 
 catalog:
-  locations:
+  providers:
+    githubOrg:
+      id: production
+      githubUrl: https://github.com
+      orgs:
+        - leds-conectafapes
+      schedule:
+        initialDelay: { seconds: 30 }
+        frequency: { hours: 1 }
+        timeout: { minutes: 50 }
 
-
-# kubernetes:
+kubernetes:
 
 # permission:
 #   enabled: true
