@@ -15,10 +15,9 @@ import {
   Grid,
 } from "@material-ui/core"
 import { useUserProfile } from "@backstage/plugin-user-settings"
-import { tools, notices } from "./home-data"
+import { tools } from "./home-data"
 import { useEffect, useState } from "react"
 import { CustomToolkit } from "./custom-toolkit"
-import { NoticeBoard } from "./notice-board"
 
 const useStyles = makeStyles((theme) => ({
   pageHeader: {
@@ -379,7 +378,6 @@ export const HomePage = () => {
                     Quadro de Avisos
                   </Typography>
                   <div className={classes.toolkitContainer}>
-                    <NoticeBoard notices={notices || []} />
                   </div>
                 </Paper>
               </Grid>

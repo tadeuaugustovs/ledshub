@@ -44,6 +44,7 @@ import { HomePage } from './components/home/HomePage';
 
 // 👉 Importa a nova página de login customizada
 import { CustomSignInPage } from './components/login/CustomSignInPage';
+import { ManageUsersPage } from './components/users/ManageUsersPage';
 
 
 const app = createApp({
@@ -133,6 +134,7 @@ const routes = (
     <Route path="/settings" element={<UserSettingsPage />} />
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
     <Route path="/home" element={<HomePage />} />
+    <Route path="/users" element={<ManageUsersPage />} />
     {/* <Route path="/github-issues" element={<GithubIssuesPage />} /> */}
     {/* <Route path="/financeiro" element={<FinanceiroPage />} /> */}
   </FlatRoutes>
